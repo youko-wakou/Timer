@@ -39,7 +39,7 @@
         android:text="一時停止" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/reset_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
