@@ -35,27 +35,32 @@ public class MainActivity extends AppCompatActivity {
         mStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mTimer = new Timer();
-                mTimer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        mTimerSec += 0.1;
+                if (mTimer == null) {
+                    mTimer = new Timer();
+                    mTimer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            mTimerSec += 0.1;
 
-                        mHandler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                mTimerText.setText(String.format("%.1f", mTimerSec));
-                            }
-                        });
-                    }
-                }, 100, 100);
+                            mHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mTimerText.setText(String.format("%.1f", mTimerSec));
+                                }
+                            });
+                        }
+                    }, 100, 100);
+                }
             }
         });
 
         mPauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mTimer.cancel();
+                if (mTimer != null) {
+                    mTimer.cancel();
+                    mTimer = null;
+                }
             }
         });
 
@@ -64,6 +69,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mTimerSec = 0.0;
                 mTimerText.setText(String.format("%.1f", mTimerSec));
+
+                if (mTimer != null) {
+                    mTimer.cancel();
+                    mTimer = null;
+                }
             }
         });
     }
